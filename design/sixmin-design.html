@@ -1,0 +1,1130 @@
+<title>SIXMIN</title>
+<style>
+:root{
+  --ink:#0B0E13;
+  --surface:#141922;
+  --raised:#1C222D;
+  --line:#2A3140;
+  --line-soft:#20262F;
+  --text:#E8EBF0;
+  --dim:#8A93A4;
+  --faint:#59616F;
+
+  --listen:#6FB6FF;
+  --shadow:#43D9BE;
+  --output:#FF8A4C;
+  --good:#5BE08A;
+  --danger:#FF6B6B;
+
+  --sheet:#F1F3F6;
+  --sheet-2:#E4E8ED;
+  --sheet-ink:#12161C;
+  --sheet-dim:#5A6470;
+  --sheet-line:#CBD2DA;
+
+  --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--ink);
+  color:var(--text);
+  font-family:var(--ui);
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1140px;margin:0 auto;padding:0 28px 120px}
+
+/* ---------- typography ---------- */
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);
+}
+.eyebrow.t{color:var(--shadow)}
+h2{
+  font-size:clamp(1.45rem,3vw,1.9rem);font-weight:700;letter-spacing:-.02em;
+  margin-top:10px;text-wrap:balance;
+}
+h3{font-size:1.02rem;font-weight:650;letter-spacing:-.01em}
+p{color:var(--dim);font-size:.94rem;max-width:64ch}
+p strong{color:var(--text);font-weight:600}
+code{font-family:var(--mono);font-size:.86em;color:var(--shadow)}
+.num{font-variant-numeric:tabular-nums}
+
+/* ---------- header ---------- */
+header{padding:76px 0 0}
+.mark{
+  font-family:var(--mono);font-weight:700;
+  font-size:clamp(2.6rem,8vw,4.4rem);letter-spacing:-.04em;line-height:1;
+}
+.mark b{color:var(--shadow);font-weight:700}
+.mark-sub{
+  font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--faint);margin-top:14px;
+}
+.lede{margin-top:26px;font-size:1.06rem;color:var(--text);max-width:56ch;font-weight:450}
+.lede span{color:var(--dim)}
+.arc{display:flex;gap:0;margin-top:38px;border-radius:3px;overflow:hidden;max-width:560px}
+.arc div{height:5px;flex:1}
+.arc-key{
+  display:flex;gap:0;max-width:560px;margin-top:9px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+}
+.arc-key div{flex:1;color:var(--faint)}
+
+/* ---------- section ---------- */
+section{margin-top:104px}
+.sec-head{border-top:1px solid var(--line);padding-top:22px;margin-bottom:38px}
+.sec-head p{margin-top:12px}
+
+/* ---------- light sheet ---------- */
+.sheet{
+  background:var(--sheet);color:var(--sheet-ink);
+  border-radius:12px;padding:32px 30px;
+}
+.sheet p{color:var(--sheet-dim)}
+.sheet .eyebrow{color:var(--sheet-dim)}
+.sheet code{color:#0F6B5C}
+.sheet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:26px}
+
+.swatch{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--sheet-line)}
+.swatch:last-child{border-bottom:none}
+.dot{width:26px;height:26px;border-radius:6px;flex:none;border:1px solid rgba(0,0,0,.16)}
+.sw-name{font-size:.86rem;font-weight:600;line-height:1.3}
+.sw-hex{font-family:var(--mono);font-size:11px;color:var(--sheet-dim);letter-spacing:.04em}
+
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th{
+  text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--sheet-dim);font-weight:600;padding:0 12px 9px 0;border-bottom:1px solid var(--sheet-line);
+}
+td{padding:11px 12px 11px 0;border-bottom:1px solid var(--sheet-line);vertical-align:top}
+tbody tr:last-child td{border-bottom:none}
+td.m{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl-scroll{overflow-x:auto}
+
+/* ---------- screens ---------- */
+.screen{
+  display:grid;grid-template-columns:300px 1fr;gap:52px;
+  padding:46px 0;border-top:1px solid var(--line-soft);
+  align-items:start;
+}
+.screen:first-of-type{border-top:none}
+.notes h3{margin-bottom:4px}
+.notes .step{
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--faint);
+}
+.notes ul{list-style:none;margin-top:20px;display:flex;flex-direction:column;gap:14px}
+.notes li{
+  font-size:.9rem;color:var(--dim);padding-left:18px;position:relative;line-height:1.6;
+}
+.notes li::before{
+  content:"";position:absolute;left:0;top:.62em;width:7px;height:1px;background:var(--faint);
+}
+.notes li b{color:var(--text);font-weight:600}
+.tagrow{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}
+.tag{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--line);color:var(--faint);padding:4px 9px;border-radius:99px;
+}
+
+/* ---------- phone ---------- */
+.phone{width:299px;height:648px;border-radius:41px;box-shadow:0 26px 60px rgba(0,0,0,.55);flex:none}
+.phone-inner{
+  width:393px;height:852px;transform:scale(.76);transform-origin:top left;
+  background:var(--surface);border-radius:54px;border:1px solid #333B48;
+  overflow:hidden;position:relative;display:flex;flex-direction:column;
+  font-size:15px;
+}
+.p-status{
+  height:54px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 34px 6px;font-size:15px;font-weight:600;letter-spacing:.01em;
+}
+.p-status .r{display:flex;align-items:center;gap:6px}
+.p-batt{width:24px;height:12px;border:1.4px solid var(--dim);border-radius:3px;position:relative;padding:1.5px}
+.p-batt i{display:block;height:100%;width:72%;background:var(--text);border-radius:1px}
+.p-sig{display:flex;align-items:flex-end;gap:2px;height:11px}
+.p-sig i{width:3px;background:var(--text);border-radius:1px}
+
+.p-nav{padding:6px 22px 0;flex:none}
+.p-nav-top{display:flex;align-items:center;justify-content:space-between;min-height:34px}
+.p-back{color:var(--dim);font-size:22px;line-height:1}
+.p-title-l{font-size:32px;font-weight:750;letter-spacing:-.03em;margin-top:2px}
+.p-title-s{font-size:17px;font-weight:650;letter-spacing:-.01em}
+.p-date{font-size:14px;color:var(--dim);margin-top:1px}
+
+.p-body{flex:1;overflow:hidden;padding:16px 22px 0;display:flex;flex-direction:column;gap:13px}
+
+.p-card{background:var(--raised);border:1px solid var(--line);border-radius:16px;padding:16px}
+.p-label{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
+}
+.p-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.06em;
+  border:1px solid var(--line);color:var(--dim);padding:4px 9px;border-radius:99px;white-space:nowrap;
+}
+.p-chip.on{border-color:currentColor}
+.p-btn{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  border-radius:13px;padding:14px;font-size:15px;font-weight:650;
+}
+.p-btn.fill{background:var(--shadow);color:#07100E}
+.p-btn.ghost{border:1px solid var(--line);color:var(--text)}
+.p-muted{color:var(--dim);font-size:13px}
+.p-hr{height:1px;background:var(--line-soft)}
+
+/* waveform */
+.wave{display:flex;align-items:center;gap:2px;height:44px;overflow:hidden}
+.wave i{flex:1;border-radius:1px;min-width:1px}
+
+/* stage rows */
+.stage{display:flex;align-items:center;gap:13px;padding:14px 16px;border-radius:14px;background:var(--raised);border:1px solid var(--line)}
+.stage .idx{font-family:var(--mono);font-size:12px;font-weight:700;width:20px;flex:none}
+.stage .nm{flex:1;min-width:0}
+.stage .nm b{display:block;font-size:15.5px;font-weight:650}
+.stage .nm span{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.stage .st{font-size:12.5px;text-align:right;white-space:nowrap}
+.ring{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center;font-size:13px}
+
+/* tabs */
+.p-tabs{
+  flex:none;height:83px;border-top:1px solid var(--line-soft);
+  background:rgba(20,25,34,.92);display:flex;padding-top:9px;
+}
+.p-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--faint);font-size:10.5px;font-weight:550}
+.p-tab.on{color:var(--shadow)}
+.p-tab svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.p-home{position:absolute;left:50%;transform:translateX(-50%);bottom:9px;width:140px;height:5px;border-radius:3px;background:#4A525F}
+
+/* heatmap */
+.hm{display:flex;gap:3px}
+.hm-col{display:flex;flex-direction:column;gap:3px}
+.hm-c{width:11px;height:11px;border-radius:2.5px;background:#1B212B}
+
+/* stat tiles */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tile{background:var(--raised);border:1px solid var(--line);border-radius:14px;padding:13px 14px}
+.tile b{display:block;font-family:var(--mono);font-size:24px;font-weight:700;letter-spacing:-.02em;margin-top:5px}
+
+/* review */
+.rv-card{
+  flex:1;background:var(--raised);border:1px solid var(--line);border-radius:20px;
+  padding:26px 22px;display:flex;flex-direction:column;justify-content:center;gap:18px;text-align:center;
+}
+.rv-grade{display:flex;gap:7px}
+.rv-grade div{flex:1;border:1px solid var(--line);border-radius:12px;padding:11px 4px;text-align:center}
+.rv-grade b{display:block;font-size:13.5px;font-weight:650}
+.rv-grade span{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.04em}
+
+/* misc rows */
+.lrow{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line-soft)}
+.lrow:last-child{border-bottom:none}
+.seg{display:flex;background:var(--raised);border-radius:10px;padding:3px;border:1px solid var(--line)}
+.seg div{flex:1;text-align:center;font-size:13.5px;font-weight:600;padding:6px;border-radius:8px;color:var(--dim)}
+.seg div.on{background:var(--line);color:var(--text)}
+.field{background:var(--ink);border:1px solid var(--line);border-radius:11px;padding:11px 12px;font-size:14px}
+.toggle{width:44px;height:26px;border-radius:99px;background:var(--shadow);position:relative;flex:none}
+.toggle i{position:absolute;right:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#0B0E13}
+.toggle.off{background:var(--line)}
+.toggle.off i{right:auto;left:3px;background:#767E8C}
+
+/* footer */
+footer{margin-top:110px;border-top:1px solid var(--line);padding-top:30px}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s ease}
+.rv.in{opacity:1;transform:none}
+
+@media (max-width:900px){
+  .screen{grid-template-columns:1fr;gap:30px}
+  .wrap{padding:0 18px 80px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  *{animation:none!important}
+}
+:focus-visible{outline:2px solid var(--shadow);outline-offset:3px}
+</style>
+
+<div class="wrap">
+
+<header>
+  <div class="mark">SIX<b>MIN</b></div>
+  <div class="mark-sub">iOS · 화면 설계 v1</div>
+  <p class="lede">
+    BBC 6 Minute English 한 편을 매일 하나씩, <strong>듣기 → 섀도잉 → 출력</strong> 순서로 끝까지 끌고 가는 개인 학습 앱.
+    <span>도중에 걸린 표현은 카드가 되어 간격 반복으로 돌아온다.</span>
+  </p>
+
+  <div class="arc" aria-hidden="true">
+    <div style="background:var(--listen)"></div>
+    <div style="background:var(--shadow)"></div>
+    <div style="background:var(--output)"></div>
+  </div>
+  <div class="arc-key">
+    <div>01 듣기 / 받아들임</div>
+    <div>02 섀도잉 / 따라 말함</div>
+    <div>03 출력 / 내보냄</div>
+  </div>
+</header>
+
+<!-- ============ 디자인 원칙 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="eyebrow t">디자인 원칙</div>
+    <h2>소리를 다루는 앱이니, 소리에서 시각 언어를 가져온다</h2>
+    <p>비유를 씌우지 않는다. 화면에 나오는 모든 시각 요소는 앱이 실제로 처리하는 것 — 오디오 파형, 재생 위치, 문장 타임스탬프, 내 목소리와 원본의 차이 — 에서 나온다.</p>
+  </div>
+
+  <div class="sheet">
+    <div class="sheet-grid">
+      <div>
+        <div class="eyebrow">규칙 1 — 색 온도</div>
+        <h3 style="margin:8px 0 10px">루틴은 차가운 색에서 따뜻한 색으로</h3>
+        <p style="font-size:.88rem">듣기는 밖에서 들어오는 소리라 <strong>블루</strong>, 섀도잉은 그 사이에 걸쳐 있어 <strong>틸</strong>, 출력은 내가 내보내는 말이라 <strong>오렌지</strong>. 화면 어디서든 색만 보고 지금 어느 단계인지 안다.</p>
+      </div>
+      <div>
+        <div class="eyebrow">규칙 2 — 목소리 대조</div>
+        <h3 style="margin:8px 0 10px">원본은 블루, 내 목소리는 오렌지</h3>
+        <p style="font-size:.88rem">파형이 나오는 모든 곳에서 이 두 색은 절대 바뀌지 않는다. 섀도잉 화면의 상하 파형 대조가 이 앱의 시그니처이고, 복습 카드의 재생 버튼까지 같은 규칙을 따른다.</p>
+      </div>
+      <div>
+        <div class="eyebrow">규칙 3 — 숫자는 모노스페이스</div>
+        <h3 style="margin:8px 0 10px">시간·간격·진행도는 자리가 흔들리지 않게</h3>
+        <p style="font-size:.88rem">타이머, 타임스탬프, 복습 간격, 연속 일수는 전부 <code>tabular-nums</code> 모노스페이스. 1초마다 숫자가 덜컹거리는 걸 막는 실용적 이유이자, 이 앱이 시간을 다룬다는 신호.</p>
+      </div>
+    </div>
+
+    <div style="height:1px;background:var(--sheet-line);margin:30px 0"></div>
+
+    <div class="sheet-grid">
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px">색 · 단계</div>
+        <div class="swatch"><span class="dot" style="background:#6FB6FF"></span><span><span class="sw-name">듣기 Listen</span><span class="sw-hex">#6FB6FF</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#43D9BE"></span><span><span class="sw-name">섀도잉 Shadow · 앱 틴트</span><span class="sw-hex">#43D9BE</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#FF8A4C"></span><span><span class="sw-name">출력 Output · 내 목소리</span><span class="sw-hex">#FF8A4C</span></span></div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px">색 · 바닥</div>
+        <div class="swatch"><span class="dot" style="background:#0B0E13"></span><span><span class="sw-name">Ink · 앱 배경</span><span class="sw-hex">#0B0E13</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#141922"></span><span><span class="sw-name">Surface · 화면</span><span class="sw-hex">#141922</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#1C222D"></span><span><span class="sw-name">Raised · 카드</span><span class="sw-hex">#1C222D</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#2A3140"></span><span><span class="sw-name">Line · 경계</span><span class="sw-hex">#2A3140</span></span></div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px">색 · 글자와 상태</div>
+        <div class="swatch"><span class="dot" style="background:#E8EBF0"></span><span><span class="sw-name">본문</span><span class="sw-hex">#E8EBF0</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#8A93A4"></span><span><span class="sw-name">보조</span><span class="sw-hex">#8A93A4</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#5BE08A"></span><span><span class="sw-name">완료</span><span class="sw-hex">#5BE08A</span></span></div>
+        <div class="swatch"><span class="dot" style="background:#FF6B6B"></span><span><span class="sw-name">경고 · 다시</span><span class="sw-hex">#FF6B6B</span></span></div>
+      </div>
+    </div>
+
+    <div style="height:1px;background:var(--sheet-line);margin:30px 0"></div>
+
+    <div class="sheet-grid">
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px">서체</div>
+        <p style="font-size:.88rem;margin-bottom:14px">iOS 시스템 서체를 그대로 쓴다. 한글은 Apple SD Gothic Neo로 떨어지고, 별도 폰트를 번들하지 않아 앱 용량과 렌더링 일관성을 지킨다.</p>
+        <div class="tbl-scroll"><table>
+          <tbody>
+            <tr><td>대제목</td><td class="m">SF Pro 34 / Bold</td></tr>
+            <tr><td>섹션 제목</td><td class="m">SF Pro 17 / Semibold</td></tr>
+            <tr><td>본문 · 스크립트</td><td class="m">SF Pro 16 / Regular</td></tr>
+            <tr><td>보조</td><td class="m">SF Pro 13 / Regular</td></tr>
+            <tr><td>라벨 · 시간</td><td class="m">SF Mono 11 / .16em</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px">간격 · 모서리</div>
+        <div class="tbl-scroll"><table>
+          <tbody>
+            <tr><td>화면 좌우 여백</td><td class="m">22pt</td></tr>
+            <tr><td>카드 사이</td><td class="m">13pt</td></tr>
+            <tr><td>카드 안쪽</td><td class="m">16pt</td></tr>
+            <tr><td>카드 모서리</td><td class="m">16pt</td></tr>
+            <tr><td>버튼 모서리</td><td class="m">13pt</td></tr>
+            <tr><td>최소 터치 영역</td><td class="m">44 × 44pt</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:12px">파형 규격</div>
+        <div class="tbl-scroll"><table>
+          <tbody>
+            <tr><td>막대 폭 / 간격</td><td class="m">2 / 2pt</td></tr>
+            <tr><td>전체 트랙 높이</td><td class="m">44pt</td></tr>
+            <tr><td>문장 대조 높이</td><td class="m">32pt × 2</td></tr>
+            <tr><td>재생 완료 구간</td><td class="m">단계색 100%</td></tr>
+            <tr><td>미재생 구간</td><td class="m">단계색 22%</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 화면 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="eyebrow t">화면</div>
+    <h2>탭 넷, 루틴 셋</h2>
+    <p>하단 탭은 <strong>오늘 · 복습 · 기록 · 라이브러리</strong> 네 개. 루틴 3단계는 탭이 아니라 「오늘」에서 밀고 들어가는 화면이라, 순서를 건너뛰기 어렵게 만든다.</p>
+  </div>
+
+  <!-- 1. 오늘 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav">
+        <div class="p-nav-top">
+          <div>
+            <div class="p-title-l">오늘</div>
+            <div class="p-date">8월 15일 금요일</div>
+          </div>
+          <span class="p-chip on" style="color:var(--output)">12일 연속</span>
+        </div>
+      </div>
+
+      <div class="p-body">
+        <div class="p-card" style="padding-bottom:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="p-label">EP.260813</span>
+            <span class="p-label">6 MINUTE ENGLISH</span>
+          </div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;margin:9px 0 12px;line-height:1.3">Why do we get bored?</div>
+          <div class="wave" data-wave="today" data-n="52" data-color="var(--listen)" data-progress="0"></div>
+          <div style="display:flex;gap:7px;margin-top:12px">
+            <span class="p-chip"><span class="num">6:12</span></span>
+            <span class="p-chip" style="color:var(--good)">오디오 준비됨</span>
+            <span class="p-chip" style="color:var(--good)">스크립트 38문장</span>
+          </div>
+        </div>
+
+        <div class="stage" style="border-color:rgba(111,182,255,.34)">
+          <span class="idx" style="color:var(--listen)">01</span>
+          <span class="nm"><b>듣기</b><span>Listen · 20분</span></span>
+          <span class="st" style="color:var(--good)">완료</span>
+          <span class="ring" style="border-color:var(--good);color:var(--good)">✓</span>
+        </div>
+
+        <div class="stage" style="border-color:var(--shadow);background:rgba(67,217,190,.07)">
+          <span class="idx" style="color:var(--shadow)">02</span>
+          <span class="nm"><b>섀도잉</b><span>Shadow · 15분</span></span>
+          <span class="st" style="color:var(--shadow)"><span class="num">12 / 38</span><br><span style="color:var(--faint);font-size:11px">문장</span></span>
+          <span class="ring" style="border-color:var(--shadow);color:var(--shadow)">›</span>
+        </div>
+
+        <div class="stage">
+          <span class="idx" style="color:var(--faint)">03</span>
+          <span class="nm"><b style="color:var(--dim)">출력</b><span>Output · 25분</span></span>
+          <span class="st" style="color:var(--faint)">대기</span>
+          <span class="ring" style="color:var(--faint)">›</span>
+        </div>
+
+        <div class="p-card" style="display:flex;align-items:center;gap:12px;padding:14px 16px">
+          <div style="flex:1">
+            <div style="font-size:15px;font-weight:650">오늘 복습</div>
+            <div class="p-muted"><span class="num">14</span>장 · 신규 <span class="num">3</span></div>
+          </div>
+          <span class="p-chip on" style="color:var(--shadow)">시작</span>
+        </div>
+      </div>
+
+      <div class="p-tabs">
+        <div class="p-tab on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>오늘</div>
+        <div class="p-tab"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="14" height="12" rx="2.5"/><path d="M8 5h11a2 2 0 0 1 2 2v9"/></svg>복습</div>
+        <div class="p-tab"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>기록</div>
+        <div class="p-tab"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="4" rx="1.2"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 13h4"/></svg>라이브러리</div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">탭 01</div>
+      <h3>오늘</h3>
+      <p>앱을 열면 <strong>오늘 뭘 해야 하는지</strong>만 보인다. 에피소드 선택이라는 결정 자체를 없애서, 매일 여는 문턱을 낮추는 게 이 화면의 유일한 목적이다.</p>
+      <ul>
+        <li>에피소드는 <b>자동 배정</b>된다. RSS에서 받은 것 중 아직 안 한 최신 편이 오늘 자리에 올라오고, 다른 편은 라이브러리에서 직접 고른다</li>
+        <li>카드의 파형은 장식이 아니라 <b>이 에피소드의 실제 오디오</b>. 재생을 시작하면 이 파형이 그대로 듣기 화면으로 이어진다</li>
+        <li>3단계는 <b>진행 중인 하나만 색을 갖는다</b>. 완료는 초록 체크로 가라앉고, 아직 안 온 단계는 회색으로 물러난다</li>
+        <li>상단 <b>연속 일수</b>는 3단계를 모두 마친 날만 센다. 절반만 한 날은 기록에는 남지만 연속은 끊긴다</li>
+        <li>복습은 루틴과 분리된 별도 카드. 루틴을 못 한 날에도 복습만 따로 할 수 있어야 한다</li>
+      </ul>
+      <div class="tagrow"><span class="tag">자동 배정</span><span class="tag">단계 잠금 없음</span><span class="tag">복습 분리</span></div>
+    </div>
+  </div>
+
+  <!-- 2. 듣기 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav">
+        <div class="p-nav-top">
+          <span class="p-back">‹</span>
+          <span class="p-title-s">듣기</span>
+          <span class="p-chip on num" style="color:var(--listen)">17:42</span>
+        </div>
+      </div>
+
+      <div class="p-body">
+        <div style="text-align:center;padding:4px 0 2px">
+          <div class="p-label">EP.260813</div>
+          <div style="font-size:17px;font-weight:650;margin-top:5px">Why do we get bored?</div>
+        </div>
+
+        <div class="p-card" style="border-color:rgba(111,182,255,.3)">
+          <div class="wave" style="height:56px" data-wave="listen" data-n="60" data-color="var(--listen)" data-progress="0.43"></div>
+          <div style="display:flex;justify-content:space-between;margin-top:9px" class="p-label">
+            <span class="num" style="color:var(--listen)">2:41</span><span class="num">6:12</span>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:26px;margin-top:14px">
+            <span style="font-size:19px;color:var(--dim)" class="num">−15</span>
+            <span style="width:62px;height:62px;border-radius:50%;background:var(--listen);color:#06121F;display:grid;place-items:center;font-size:22px">❚❚</span>
+            <span style="font-size:19px;color:var(--dim)" class="num">+15</span>
+          </div>
+          <div style="display:flex;gap:7px;justify-content:center;margin-top:14px">
+            <span class="p-chip on num" style="color:var(--listen)">1.0×</span>
+            <span class="p-chip">구간 반복</span>
+            <span class="p-chip">배경 재생</span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span class="p-label">스크립트</span>
+          <span class="p-chip">1회차엔 가림</span>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;gap:9px;overflow:hidden">
+          <div style="font-size:15.5px;line-height:1.5;color:var(--faint);filter:blur(3.4px)">Hello and welcome to 6 Minute English.</div>
+          <div style="font-size:16px;line-height:1.5;color:var(--listen);font-weight:550">And I'm Beth. Today we're talking about boredom.</div>
+          <div style="font-size:15.5px;line-height:1.5;color:var(--faint);filter:blur(3.4px)">Have you ever sat through a long meeting and felt your mind wander off completely?</div>
+          <div style="font-size:15.5px;line-height:1.5;color:var(--faint);filter:blur(3.4px)">That feeling has a name, and scientists find it surprisingly useful.</div>
+        </div>
+
+        <div style="padding-bottom:14px;display:flex;gap:9px">
+          <div class="p-btn ghost" style="flex:none;padding:14px 16px">스크립트 열기</div>
+          <div class="p-btn fill" style="flex:1;background:var(--listen);color:#06121F">듣기 완료</div>
+        </div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">루틴 01</div>
+      <h3>듣기</h3>
+      <p>첫 청취는 <strong>글자 없이</strong> 한다. 스크립트를 흐릿하게 깔아두되 열려면 한 번 눌러야 하게 만들어, 눈으로 읽고 이해한 걸 들었다고 착각하는 걸 막는다.</p>
+      <ul>
+        <li>재생 중인 문장만 <b>블루로 또렷해진다</b>. 스크립트를 열어도 시선이 한 줄에 묶여서 훑어 읽기가 어렵다</li>
+        <li>파형은 재생된 구간이 진하고 남은 구간이 22% 투명. <b>얼마나 남았는지를 숫자보다 먼저</b> 알게 한다</li>
+        <li>상단 <b>17:42</b>는 20분 루틴 타이머. 오디오 길이(6:12)와 다른 값이라 색을 같게 쓰되 위치로 구분한다</li>
+        <li>배경 재생을 켜면 화면을 꺼도 계속 들린다. 출퇴근길 사용이 이 단계의 주 무대</li>
+        <li>완료 버튼은 타이머가 끝나기 전에도 누를 수 있다. <b>강제하지 않되 기본값을 제시</b>하는 게 루틴 앱의 태도</li>
+      </ul>
+      <div class="tagrow"><span class="tag">소리 우선</span><span class="tag">문장 하이라이트</span><span class="tag">배경 재생</span></div>
+    </div>
+  </div>
+
+  <!-- 3. 섀도잉 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav">
+        <div class="p-nav-top">
+          <span class="p-back">‹</span>
+          <span class="p-title-s">섀도잉</span>
+          <span class="p-chip on num" style="color:var(--shadow)">12 / 38</span>
+        </div>
+      </div>
+
+      <div class="p-body">
+        <div class="p-card" style="border-color:var(--shadow);background:rgba(67,217,190,.06)">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="p-label" style="color:var(--shadow)">문장 12</span>
+            <span class="p-label num">1:24 – 1:31</span>
+          </div>
+          <div style="font-size:17px;line-height:1.45;font-weight:550;margin:10px 0 16px">Have you ever sat through a long meeting and felt your mind wander off?</div>
+
+          <div style="display:flex;align-items:center;gap:9px">
+            <span class="p-label" style="width:34px;flex:none;color:var(--listen)">원본</span>
+            <span class="wave" style="height:30px;flex:1" data-wave="src" data-n="34" data-color="var(--listen)" data-progress="1"></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px;margin-top:7px">
+            <span class="p-label" style="width:34px;flex:none;color:var(--output)">내 말</span>
+            <span class="wave" style="height:30px;flex:1" data-wave="mine" data-n="34" data-color="var(--output)" data-progress="1"></span>
+          </div>
+          <div class="p-label" style="margin-top:9px;text-align:right">길이 차 <span class="num" style="color:var(--output)">+0.6s</span></div>
+
+          <div style="display:flex;gap:7px;margin-top:13px">
+            <span class="p-chip" style="color:var(--listen)">▶ 원본</span>
+            <span class="p-chip" style="color:var(--output)">▶ 내 녹음</span>
+            <span class="p-chip num">0.75×</span>
+            <span class="p-chip">⟲</span>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:4px 0">
+          <span class="p-chip">다시 녹음</span>
+          <span style="width:64px;height:64px;border-radius:50%;border:3px solid var(--output);display:grid;place-items:center">
+            <span style="width:26px;height:26px;border-radius:7px;background:var(--output);display:block"></span>
+          </span>
+          <span class="p-chip num" style="color:var(--output)">0:04</span>
+        </div>
+
+        <div class="p-hr"></div>
+
+        <div style="flex:1;overflow:hidden;display:flex;flex-direction:column;gap:2px">
+          <div class="lrow" style="padding:10px 0">
+            <span class="p-label num" style="width:22px">13</span>
+            <span style="flex:1;font-size:14px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">That feeling has a name, and scientists…</span>
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--line)"></span>
+          </div>
+          <div class="lrow" style="padding:10px 0">
+            <span class="p-label num" style="width:22px">14</span>
+            <span style="flex:1;font-size:14px;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Boredom pushes us to look for something…</span>
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--line)"></span>
+          </div>
+          <div class="lrow" style="padding:10px 0">
+            <span class="p-label num" style="width:22px">11</span>
+            <span style="flex:1;font-size:14px;color:var(--faint);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">And I'm Beth. Today we're talking about…</span>
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--output)"></span>
+          </div>
+        </div>
+
+        <div class="p-btn fill" style="margin-bottom:14px">다음 문장 →</div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">루틴 02</div>
+      <h3>섀도잉</h3>
+      <p>이 앱의 <strong>중심 화면</strong>. 스크립트를 문장 단위로 쪼개 타임스탬프를 붙여둔 덕에, 한 문장을 구간 반복하면서 바로 녹음하고 원본과 겹쳐 볼 수 있다.</p>
+      <ul>
+        <li>파형 두 줄을 <b>위아래로 정렬</b>해 길이와 강세 위치 차이가 눈에 띄게 한다. 「+0.6s」처럼 숫자로도 한 번 더 말해준다</li>
+        <li>원본은 항상 위·블루, 내 목소리는 항상 아래·오렌지. <b>이 배치는 앱 전체에서 고정</b>이다</li>
+        <li>녹음 버튼은 화면 중앙 아래, <b>엄지가 닿는 자리</b>. 문장을 반복하는 동안 손이 움직이지 않아야 한다</li>
+        <li>0.75× 속도는 피치를 유지한 채 느리게. 따라잡히면 1.0×로 올린다</li>
+        <li>아래 목록의 <b>오렌지 점은 녹음이 남아 있는 문장</b>. 회색은 아직 안 한 문장이라, 진행 상황이 목록만 봐도 읽힌다</li>
+        <li>38문장을 다 할 필요는 없다. 15분 타이머가 끝나면 <b>거기까지가 오늘 분량</b></li>
+      </ul>
+      <div class="tagrow"><span class="tag">구간 반복</span><span class="tag">파형 대조</span><span class="tag">문장별 녹음 보관</span></div>
+    </div>
+  </div>
+
+  <!-- 4. 출력 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav">
+        <div class="p-nav-top">
+          <span class="p-back">‹</span>
+          <span class="p-title-s">출력</span>
+          <span class="p-chip on num" style="color:var(--output)">21:08</span>
+        </div>
+      </div>
+
+      <div class="p-body">
+        <div class="seg">
+          <div class="on">쓰기</div><div>말하기</div>
+        </div>
+
+        <div class="p-card" style="border-color:rgba(255,138,76,.34)">
+          <div class="p-label" style="color:var(--output)">오늘의 과제 · 1 / 3</div>
+          <div style="font-size:16px;line-height:1.5;margin-top:8px">오늘 에피소드를 <b>영어 세 문장</b>으로 요약해 보세요.</div>
+          <div class="field" style="margin-top:12px;min-height:82px;color:var(--dim);line-height:1.55">Today's episode was about boredom. They said it's not always a bad thing because…</div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+            <span class="p-label num">2 / 3 문장</span>
+            <span class="p-chip">다음 과제</span>
+          </div>
+        </div>
+
+        <div class="p-card">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span class="p-label">막힌 표현 저장</span>
+            <span class="p-chip">문장 12 연결됨</span>
+          </div>
+          <div class="field" style="margin-top:10px">쓰다가 막힌 한국어를 그대로</div>
+          <div class="field" style="margin-top:7px;font-family:var(--mono);font-size:13px">틀려도 좋으니 영어로</div>
+          <div style="display:flex;gap:7px;margin-top:10px">
+            <span class="p-chip on" style="color:var(--output)">카드로 저장</span>
+            <span class="p-chip">단어로</span>
+          </div>
+        </div>
+
+        <div>
+          <div class="p-label" style="margin-bottom:4px">오늘 저장한 카드 <span class="num">3</span></div>
+          <div class="lrow" style="padding:11px 0">
+            <span style="flex:1;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">회의가 늘어지는 느낌이었어요</span>
+            <span class="p-chip">문장</span>
+          </div>
+          <div class="lrow" style="padding:11px 0">
+            <span style="flex:1;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">wander off</span>
+            <span class="p-chip">단어</span>
+          </div>
+        </div>
+
+        <div style="flex:1"></div>
+        <div class="p-btn fill" style="margin-bottom:14px;background:var(--output);color:#1A0C04">출력 완료</div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">루틴 03</div>
+      <h3>출력</h3>
+      <p>들은 걸 <strong>내 말로 다시 뱉는</strong> 단계. 그리고 여기서 막힌 표현이 곧 복습 카드가 된다 — 학습 루프가 닫히는 지점이라, 저장 동선을 화면 안에 붙여 두는 게 핵심이다.</p>
+      <ul>
+        <li>과제는 3개 고정: <b>요약 → 내 경험과 연결 → 새 표현 3개 사용</b>. 매일 같은 틀이라 뭘 쓸지 고민하는 시간이 사라진다</li>
+        <li>쓰기 / 말하기 전환. 말하기는 녹음으로 남고, <b>섀도잉 녹음과 같은 오렌지</b>로 표시된다</li>
+        <li>저장 시 <b>방금 섀도잉한 문장이 자동으로 연결</b>된다. 나중에 복습할 때 원본 소리를 바로 들을 수 있는 건 이 연결 덕분</li>
+        <li>한국어 칸을 먼저 두는 건 의도적이다. 한국어로 떠오른 걸 영어로 못 옮긴 순간이 <b>기록할 가치가 있는 유일한 순간</b>이니까</li>
+        <li>영어 칸은 틀린 채로 저장해도 된다. 복습 때 고쳐 나가는 게 이 카드의 용도</li>
+      </ul>
+      <div class="tagrow"><span class="tag">고정 과제 3개</span><span class="tag">카드 자동 연결</span><span class="tag">쓰기 · 말하기</span></div>
+    </div>
+  </div>
+
+  <!-- 5. 복습 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav">
+        <div class="p-nav-top">
+          <span class="p-back">‹</span>
+          <span class="p-title-s">복습</span>
+          <span class="p-chip num">9 / 23</span>
+        </div>
+        <div style="height:3px;background:var(--line);border-radius:2px;margin-top:11px;overflow:hidden">
+          <div style="width:39%;height:100%;background:var(--shadow)"></div>
+        </div>
+      </div>
+
+      <div class="p-body">
+        <div style="display:flex;gap:7px">
+          <span class="p-chip" style="color:var(--listen)">신규 3</span>
+          <span class="p-chip" style="color:var(--shadow)">복습 18</span>
+          <span class="p-chip" style="color:var(--danger)">다시 2</span>
+        </div>
+
+        <div class="rv-card">
+          <div class="p-label">한국어 → 영어</div>
+          <div style="font-size:22px;font-weight:650;line-height:1.45">회의가 늘어지는 느낌이었어요</div>
+          <div class="p-hr"></div>
+          <div style="font-family:var(--mono);font-size:16px;color:var(--shadow);line-height:1.5">The meeting felt like it dragged on.</div>
+          <div style="display:flex;align-items:center;justify-content:center;gap:9px">
+            <span class="p-chip" style="color:var(--listen)">▶ 원본 1:24</span>
+            <span class="p-chip" style="color:var(--output)">▶ 내 녹음</span>
+          </div>
+          <div class="p-label">EP.260813 · 문장 12</div>
+        </div>
+
+        <div class="rv-grade">
+          <div style="border-color:rgba(255,107,107,.5)"><b style="color:var(--danger)">다시</b><span>10분</span></div>
+          <div><b>어려움</b><span>2일</span></div>
+          <div style="border-color:rgba(67,217,190,.5)"><b style="color:var(--shadow)">좋음</b><span>4일</span></div>
+          <div><b>쉬움</b><span>9일</span></div>
+        </div>
+        <div style="height:14px"></div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">탭 02</div>
+      <h3>복습</h3>
+      <p>Anki의 SM-2를 그대로 쓰되, 카드에 <strong>원본 오디오 구간과 내 녹음이 붙어 있다</strong>는 점이 다르다. 글자로만 외우지 않고 그날의 소리로 되돌아갈 수 있다.</p>
+      <ul>
+        <li>앞면은 한국어. <b>한국어 → 영어 방향</b>이 기본인 건 이 카드가 "말하려다 막힌 것"에서 나왔기 때문</li>
+        <li>뒤집으면 영어와 함께 <b>출처 문장·타임스탬프</b>가 뜬다. 원본 재생은 블루, 그때 내가 녹음한 건 오렌지</li>
+        <li>평가 버튼 네 개 아래 <b>다음 복습까지 며칠인지 미리 보여준다</b>. 누르기 전에 결과를 알 수 있어야 정직하게 고를 수 있다</li>
+        <li>상단 진행 막대와 신규 / 복습 / 다시 카운트로 <b>남은 양이 끝날 양인지</b> 가늠하게 한다</li>
+        <li>하루 신규 카드 상한을 두어, 출력 단계에서 20개를 저장한 날에도 복습이 폭발하지 않게 한다</li>
+      </ul>
+      <div class="tagrow"><span class="tag">SM-2</span><span class="tag">오디오 연결 카드</span><span class="tag">신규 상한</span></div>
+    </div>
+  </div>
+
+  <!-- 6. 기록 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav">
+        <div class="p-nav-top"><div><div class="p-title-l">기록</div></div></div>
+      </div>
+
+      <div class="p-body">
+        <div class="p-card">
+          <div style="display:flex;align-items:baseline;gap:9px">
+            <span class="num" style="font-family:var(--mono);font-size:38px;font-weight:700;color:var(--output);letter-spacing:-.03em">12</span>
+            <span style="font-size:15px">일 연속</span>
+            <span style="flex:1"></span>
+            <span class="p-label">최장 <span class="num">21</span>일</span>
+          </div>
+          <div style="margin-top:16px;overflow:hidden">
+            <div class="hm" data-heatmap="1"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:12px" class="p-label">
+            <span>적음</span>
+            <span style="width:11px;height:11px;border-radius:2.5px;background:#1B212B"></span>
+            <span style="width:11px;height:11px;border-radius:2.5px;background:rgba(255,138,76,.28)"></span>
+            <span style="width:11px;height:11px;border-radius:2.5px;background:rgba(255,138,76,.58)"></span>
+            <span style="width:11px;height:11px;border-radius:2.5px;background:#FF8A4C"></span>
+            <span>3단계 완료</span>
+          </div>
+        </div>
+
+        <div class="tiles">
+          <div class="tile"><span class="p-label">총 학습</span><b class="num">42<span style="font-size:14px;color:var(--dim)">시간</span></b></div>
+          <div class="tile"><span class="p-label">끝낸 에피소드</span><b class="num">63</b></div>
+          <div class="tile"><span class="p-label">보관 카드</span><b class="num">318</b></div>
+          <div class="tile"><span class="p-label">성숙 카드</span><b class="num" style="color:var(--good)">96</b></div>
+        </div>
+
+        <div class="p-card">
+          <div class="p-label" style="margin-bottom:11px">최근 7일 · 단계별</div>
+          <div style="display:flex;justify-content:space-between" data-week="1"></div>
+        </div>
+      </div>
+
+      <div class="p-tabs">
+        <div class="p-tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>오늘</div>
+        <div class="p-tab"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="14" height="12" rx="2.5"/><path d="M8 5h11a2 2 0 0 1 2 2v9"/></svg>복습</div>
+        <div class="p-tab on"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>기록</div>
+        <div class="p-tab"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="4" rx="1.2"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 13h4"/></svg>라이브러리</div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">탭 03</div>
+      <h3>기록</h3>
+      <p>히트맵은 <strong>완료 여부가 아니라 완료 정도</strong>를 담는다. 한 칸이 곧 하루이고, 3단계 중 몇 개를 했는지에 따라 농도가 달라진다.</p>
+      <ul>
+        <li>농도 4단계: <b>안 함 / 1단계 / 2단계 / 3단계 전부</b>. 절반만 한 날도 흔적이 남아야 다시 돌아오기 쉽다</li>
+        <li>색은 <b>출력 오렌지</b>. 하루가 끝까지 갔다는 뜻이니 마지막 단계의 색을 쓰는 게 맞다</li>
+        <li>20주치를 가로 스크롤 없이 담는다. 더 보려면 좌우로 밀어 과거로 간다</li>
+        <li>「성숙 카드」는 복습 간격이 21일을 넘긴 카드 수. <b>진짜로 외워진 양</b>에 가까운 지표라 따로 초록으로 띄운다</li>
+        <li>최근 7일 그리드는 하루당 점 세 개 — 어느 단계에서 자꾸 멈추는지가 보인다</li>
+      </ul>
+      <div class="tagrow"><span class="tag">부분 완료 기록</span><span class="tag">4단계 농도</span><span class="tag">성숙 카드</span></div>
+    </div>
+  </div>
+
+  <!-- 7. 라이브러리 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav">
+        <div class="p-nav-top"><div><div class="p-title-l">라이브러리</div></div>
+          <span class="p-chip" style="color:var(--shadow)">⟳ 확인</span></div>
+      </div>
+
+      <div class="p-body">
+        <div class="seg"><div class="on">에피소드</div><div>카드 318</div></div>
+        <div class="field" style="color:var(--faint)">🔍 제목·표현 검색</div>
+
+        <div style="flex:1;overflow:hidden">
+          <div class="lrow">
+            <span style="width:3px;height:34px;border-radius:2px;background:var(--good);flex:none"></span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Why do we get bored?</span>
+              <span class="p-label">8월 13일 · <span class="num">6:12</span> · 오늘 진행 중</span>
+            </span>
+          </div>
+          <div class="lrow">
+            <span style="width:3px;height:34px;border-radius:2px;background:var(--good);flex:none"></span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">The science of small talk</span>
+              <span class="p-label">8월 6일 · <span class="num">6:04</span> · 완료</span>
+            </span>
+            <span class="p-chip" style="color:var(--good)">✓</span>
+          </div>
+          <div class="lrow">
+            <span style="width:3px;height:34px;border-radius:2px;background:var(--listen);flex:none"></span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Can we trust our memories?</span>
+              <span class="p-label">7월 30일 · <span class="num">5:58</span> · 스크립트 생성 중</span>
+            </span>
+            <span class="p-chip num" style="color:var(--listen)">62%</span>
+          </div>
+          <div class="lrow">
+            <span style="width:3px;height:34px;border-radius:2px;background:var(--line);flex:none"></span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:15px;font-weight:600;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Why do cities get so hot?</span>
+              <span class="p-label">7월 23일 · <span class="num">6:20</span> · 오디오 없음</span>
+            </span>
+            <span class="p-chip">↓</span>
+          </div>
+          <div class="lrow">
+            <span style="width:3px;height:34px;border-radius:2px;background:var(--line);flex:none"></span>
+            <span style="flex:1;min-width:0">
+              <span style="display:block;font-size:15px;font-weight:600;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">The problem with plastic</span>
+              <span class="p-label">7월 16일 · <span class="num">6:08</span> · 오디오 없음</span>
+            </span>
+            <span class="p-chip">↓</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-tabs">
+        <div class="p-tab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>오늘</div>
+        <div class="p-tab"><svg viewBox="0 0 24 24"><rect x="3" y="8" width="14" height="12" rx="2.5"/><path d="M8 5h11a2 2 0 0 1 2 2v9"/></svg>복습</div>
+        <div class="p-tab"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2.5"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>기록</div>
+        <div class="p-tab on"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="4" rx="1.2"/><path d="M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8M10 13h4"/></svg>라이브러리</div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">탭 04</div>
+      <h3>라이브러리</h3>
+      <p>에피소드와 카드가 한 탭에 있다. 평소엔 볼 일이 없는 화면이라, <strong>상태를 한 줄로 읽히게</strong> 하는 데만 집중한다.</p>
+      <ul>
+        <li>왼쪽 <b>3pt 세로 막대가 상태</b>다 — 초록은 준비 완료, 블루는 처리 중, 회색은 아직 안 받음. 아이콘 여러 개보다 빠르게 읽힌다</li>
+        <li>스크립트 생성은 오래 걸리는 작업이라 <b>퍼센트를 그대로 보여준다</b>. 끝나면 막대가 초록으로 바뀐다</li>
+        <li>아래로 당기면 RSS를 다시 확인한다. 자동 갱신도 하지만 <b>수동 확인 경로를 남겨둔다</b></li>
+        <li>어떤 에피소드든 눌러서 오늘 자리에 올릴 수 있다. 자동 배정은 기본값이지 제약이 아니다</li>
+        <li>「카드 318」 탭에서는 저장한 표현을 검색·수정·정지할 수 있다</li>
+      </ul>
+      <div class="tagrow"><span class="tag">상태 막대</span><span class="tag">수동 새로고침</span><span class="tag">에피소드 교체</span></div>
+    </div>
+  </div>
+
+  <!-- 8. 설정 -->
+  <div class="screen rv">
+    <div class="phone"><div class="phone-inner">
+      <div class="p-status"><span class="num">9:41</span><span class="r">
+        <span class="p-sig"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:11px"></i></span>
+        <span class="p-batt"><i></i></span></span></div>
+
+      <div class="p-nav"><div class="p-nav-top"><span class="p-back">‹</span><span class="p-title-s">설정</span><span style="width:12px"></span></div></div>
+
+      <div class="p-body">
+        <div>
+          <div class="p-label" style="margin-bottom:8px">루틴 시간</div>
+          <div class="p-card" style="padding:4px 16px">
+            <div class="lrow"><span style="flex:1;font-size:15px;color:var(--listen)">듣기</span><span class="p-chip num">− <b style="color:var(--text)">20</b> +</span></div>
+            <div class="lrow"><span style="flex:1;font-size:15px;color:var(--shadow)">섀도잉</span><span class="p-chip num">− <b style="color:var(--text)">15</b> +</span></div>
+            <div class="lrow"><span style="flex:1;font-size:15px;color:var(--output)">출력</span><span class="p-chip num">− <b style="color:var(--text)">25</b> +</span></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="p-label" style="margin-bottom:8px">스크립트</div>
+          <div class="p-card" style="padding:4px 16px">
+            <div class="lrow"><span style="flex:1;font-size:15px">기기 안에서만 생성</span><span class="toggle"><i></i></span></div>
+            <div class="lrow"><span style="flex:1;font-size:15px">생성 후 직접 교정</span><span class="toggle off"><i></i></span></div>
+          </div>
+          <div class="p-label" style="margin-top:7px;line-height:1.5;text-transform:none;letter-spacing:0;font-size:11.5px">오디오는 BBC 공식 RSS에서 받고, 스크립트는 그 오디오로 기기 안에서 만듭니다.</div>
+        </div>
+
+        <div>
+          <div class="p-label" style="margin-bottom:8px">다운로드 · 알림</div>
+          <div class="p-card" style="padding:4px 16px">
+            <div class="lrow"><span style="flex:1;font-size:15px">Wi-Fi에서만 받기</span><span class="toggle"><i></i></span></div>
+            <div class="lrow"><span style="flex:1;font-size:15px">매일 알림</span><span class="p-chip num">07:30</span></div>
+            <div class="lrow"><span style="flex:1;font-size:15px">저장 공간</span><span class="p-chip num">1.2 GB</span></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="p-label" style="margin-bottom:8px">데이터</div>
+          <div class="p-card" style="padding:4px 16px">
+            <div class="lrow"><span style="flex:1;font-size:15px">카드 내보내기</span><span class="p-chip">CSV · Anki</span></div>
+            <div class="lrow"><span style="flex:1;font-size:15px;color:var(--danger)">오래된 오디오 정리</span><span class="p-chip">30일 이전</span></div>
+          </div>
+        </div>
+        <div style="flex:1"></div>
+      </div>
+      <div class="p-home"></div>
+    </div></div>
+
+    <div class="notes">
+      <div class="step">보조</div>
+      <h3>설정</h3>
+      <p>손댈 게 적은 게 좋은 설정 화면이다. <strong>루틴 시간</strong>만 사람마다 다르고 나머지는 기본값으로 충분해야 한다.</p>
+      <ul>
+        <li>20 / 15 / 25분은 <b>기본값이지 규칙이 아니다</b>. 출퇴근 길이에 맞춰 바꾸는 게 이 앱의 첫 커스터마이즈</li>
+        <li>「기기 안에서만 생성」이 기본 켜짐. 오디오가 밖으로 나가지 않고, 비행기 모드에서도 동작한다</li>
+        <li>기기 내 음성인식은 완벽하지 않다. <b>직접 교정</b> 옵션으로 틀린 문장을 고칠 수 있게 열어둔다</li>
+        <li>내보내기는 실제 Anki 덱으로. <b>이 앱을 그만 써도 카드는 남는다</b></li>
+        <li>오디오는 계속 쌓이니 정리 주기를 기본으로 둔다. 완료한 에피소드의 스크립트와 카드는 남기고 mp3만 지운다</li>
+      </ul>
+      <div class="tagrow"><span class="tag">온디바이스 기본</span><span class="tag">내보내기 보장</span><span class="tag">자동 정리</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 사양 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="eyebrow t">사양</div>
+    <h2>화면 뒤의 규칙</h2>
+  </div>
+
+  <div class="sheet">
+    <div class="eyebrow">간격 반복 · SM-2</div>
+    <h3 style="margin:8px 0 16px">평가에 따른 다음 복습</h3>
+    <div class="tbl-scroll"><table>
+      <thead><tr><th>평가</th><th>새 카드</th><th>2회차</th><th>이후</th><th>난이도 계수</th></tr></thead>
+      <tbody>
+        <tr><td><b>다시</b></td><td class="m">10분 뒤</td><td class="m">10분 뒤</td><td class="m">10분 뒤 · 간격 초기화</td><td class="m">−0.20</td></tr>
+        <tr><td><b>어려움</b></td><td class="m">1일</td><td class="m">3일</td><td class="m">직전 × 1.2</td><td class="m">−0.15</td></tr>
+        <tr><td><b>좋음</b></td><td class="m">1일</td><td class="m">6일</td><td class="m">직전 × 계수</td><td class="m">유지</td></tr>
+        <tr><td><b>쉬움</b></td><td class="m">4일</td><td class="m">8일</td><td class="m">직전 × 계수 × 1.3</td><td class="m">+0.15</td></tr>
+      </tbody>
+    </table></div>
+    <p style="margin-top:14px;font-size:.86rem">계수는 <code>2.5</code>에서 시작해 <code>1.3</code> 아래로 내려가지 않는다. 하루 신규 카드는 <code>20</code>장, 복습은 <code>200</code>장을 상한으로 둔다.</p>
+
+    <div style="height:1px;background:var(--sheet-line);margin:30px 0"></div>
+
+    <div class="sheet-grid">
+      <div>
+        <div class="eyebrow">모션</div>
+        <h3 style="margin:8px 0 12px">움직임은 상태 변화에만</h3>
+        <div class="tbl-scroll"><table>
+          <tbody>
+            <tr><td>단계 완료</td><td>체크 그리기 <span class="m">0.3s</span> + 햅틱 <span class="m">success</span></td></tr>
+            <tr><td>카드 뒤집기</td><td>세로 축 회전 <span class="m">0.35s</span> · spring</td></tr>
+            <tr><td>파형 재생</td><td>진행 마스크만 이동, 막대는 고정</td></tr>
+            <tr><td>녹음 시작</td><td>버튼 원 → 사각 <span class="m">0.2s</span> + 햅틱</td></tr>
+            <tr><td>히트맵 진입</td><td>주 단위 순차 등장 <span class="m">0.02s</span> 간격</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <div class="eyebrow">접근성</div>
+        <h3 style="margin:8px 0 12px">색만으로 말하지 않는다</h3>
+        <div class="tbl-scroll"><table>
+          <tbody>
+            <tr><td>단계 구분</td><td>색 + 번호(01·02·03) + 이름</td></tr>
+            <tr><td>파형 대조</td><td>색 + 「원본 / 내 말」 라벨 + 길이 차 수치</td></tr>
+            <tr><td>히트맵</td><td>농도 + VoiceOver에 날짜·완료 단계 수</td></tr>
+            <tr><td>본문</td><td>Dynamic Type 대응, 최소 대비 <span class="m">4.5:1</span></td></tr>
+            <tr><td>모션 감소</td><td>회전·순차 등장 제거, 즉시 전환</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div>
+        <div class="eyebrow">스크립트 확보</div>
+        <h3 style="margin:8px 0 12px">긁지 않고 만든다</h3>
+        <p style="font-size:.88rem">오디오는 BBC가 재사용 조건을 명시해 공개한 <strong>공식 RSS</strong>에서 받는다. 스크립트는 그 오디오를 기기 안 음성인식으로 처리해 <strong>앱이 직접 생성</strong>한다 — BBC 웹페이지의 편집 저작물을 저장·재가공하지 않는다.</p>
+        <p style="font-size:.88rem;margin-top:10px">결과물은 기기 밖으로 나가지 않고, 공유·배포 기능을 넣지 않는다. 내보내기는 <strong>내가 쓴 카드</strong>만 대상으로 한다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="eyebrow t">다음</div>
+  <h2 style="margin-bottom:18px">이 시안이 확정되면</h2>
+  <p>SwiftUI + SwiftData로 옮긴다. 먼저 <strong>RSS 수집 · 오디오 재생 · 루틴 타이머 · SRS · 히트맵</strong>까지 만들고, <strong>기기 내 스크립트 생성</strong>과 <strong>섀도잉 녹음</strong>을 두 번째 단계로 붙인다. 3번 화면이 스크립트의 타임스탬프에 통째로 기대고 있으니, 음성인식 정확도를 먼저 실측해 보는 게 순서다.</p>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  // 결정론적 난수 — 재배포해도 같은 파형이 나오도록
+  function lcg(seed){ let s = seed >>> 0; return function(){ s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; }; }
+  function seedOf(str){ let h = 2166136261; for (let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+  document.querySelectorAll('[data-wave]').forEach(function(el){
+    var rand = lcg(seedOf(el.dataset.wave));
+    var n = parseInt(el.dataset.n, 10);
+    var color = el.dataset.color;
+    var progress = parseFloat(el.dataset.progress);
+    var frag = document.createDocumentFragment();
+    for (var i=0;i<n;i++){
+      var env = Math.sin((i/n) * Math.PI * 3.1) * 0.3 + 0.62;   // 말소리처럼 뭉치게
+      var h = Math.max(0.12, Math.min(1, env * (0.45 + rand() * 0.75)));
+      var bar = document.createElement('i');
+      bar.style.height = (h * 100) + '%';
+      bar.style.background = color;
+      bar.style.opacity = (i / n) < progress ? '1' : '0.22';
+      frag.appendChild(bar);
+    }
+    el.appendChild(frag);
+  });
+
+  var hm = document.querySelector('[data-heatmap]');
+  if (hm){
+    var rand = lcg(seedOf('heatmap'));
+    var weeks = 20, frag = document.createDocumentFragment();
+    for (var w=0; w<weeks; w++){
+      var col = document.createElement('div');
+      col.className = 'hm-col';
+      for (var d=0; d<7; d++){
+        var c = document.createElement('span');
+        c.className = 'hm-c';
+        var recency = w / weeks;                        // 최근일수록 촘촘하게
+        var r = rand();
+        var lvl = r < 0.18 + (1-recency)*0.34 ? 0 : (r < 0.42 ? 1 : (r < 0.66 ? 2 : 3));
+        if (w >= weeks-2) lvl = 3;                      // 진행 중인 연속 기록
+        if (lvl === 1) c.style.background = 'rgba(255,138,76,.28)';
+        if (lvl === 2) c.style.background = 'rgba(255,138,76,.58)';
+        if (lvl === 3) c.style.background = '#FF8A4C';
+        col.appendChild(c);
+      }
+      frag.appendChild(col);
+    }
+    hm.appendChild(frag);
+  }
+
+  var wk = document.querySelector('[data-week]');
+  if (wk){
+    var days = ['월','화','수','목','금','토','일'];
+    var pattern = [3,3,2,3,3,1,3];
+    var colors = ['#6FB6FF','#43D9BE','#FF8A4C'];
+    days.forEach(function(d, i){
+      var col = document.createElement('div');
+      col.style.cssText = 'display:flex;flex-direction:column;align-items:center;gap:5px';
+      for (var s=0; s<3; s++){
+        var dot = document.createElement('span');
+        var done = s < pattern[i];
+        dot.style.cssText = 'width:9px;height:9px;border-radius:50%;background:' + (done ? colors[s] : '#242B36');
+        col.appendChild(dot);
+      }
+      var lb = document.createElement('span');
+      lb.textContent = d;
+      lb.style.cssText = 'font-size:10.5px;color:#59616F;margin-top:3px';
+      col.appendChild(lb);
+      wk.appendChild(col);
+    });
+  }
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.rv').forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+</script>
